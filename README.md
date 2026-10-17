@@ -1,80 +1,82 @@
-# 🚀 Açık Kaynak All-in-One Dashboard & Converter - Yol Haritası
+# All-in-One Dashboard & Converter: Yol Haritası
 
 ---
 
-## 📋 Faz 1: Proje Kurulumu ve Altyapı Hazırlığı
+## Yapısal Değişiklikler
 
-- [x] GitHub'da yeni bir repository oluştur (Lisans: MIT seçildi)
-- [ ] Sayfanın sağ altındaki yeşil **"Create repository"** butonuna basarak projeyi GitHub üzerinde yayınla
-- [ ] Repository'yi bilgisayarına klonla (`git clone ...`)
-- [ ] ASP.NET Core Web API projesini Clean Architecture yapısında kur (`Core`, `Infrastructure`, `API`)
-- [ ] React projesini Vite ile oluştur
-- [ ] Tailwind CSS ve Shadcn UI kütüphanelerini frontend projesine entegre et
+- [ ] Katman katman değil, **dikey dilimlerle** ilerle (her özellik backend + endpoint + React bileşeniyle baştan sona bitsin)
+- [ ] Frontend'i erkene çek: dashboard iskeleti ve dark mode kurulumdan hemen sonra gelsin
+- [ ] AI asistanı en sona taşı, haber özetleyiciyi widget fazına al
+- [ ] Clean Architecture'ı hafiflet: `Core/Infrastructure/API` yeterli, gereksiz interface/repository yazma
 
 ---
 
-## 🛠️ Faz 2: Temel Backend Servislerinin Geliştirilmesi
+## Teknik Düzeltmeler
 
-### 2.1. Widget Veri Servisleri
-- [ ] Merkez bankası veya ücretsiz döviz API'si için servis yaz
-- [ ] Open-Meteo veya OpenWeatherMap API için hava durumu servisini tamamla
-- [ ] Dış API isteklerini sınırlandırmak için `IMemoryCache` altyapısını kur
-
-### 2.2. Dosya İşleme & Dönüştürücü Servisleri
-- [ ] `SixLabors.ImageSharp` kullanarak resim dönüştürme endpoint'lerini yaz (WebP, PNG, JPG, SVG, BMP vb.)
-- [ ] `Transformers.js` / WebAssembly veya ONNX modelleri ile arka plan silme servisini entegre et
-- [ ] `PdfSharp` veya `QuestPDF` ile PDF okuma ve işleme servislerini oluştur
+- [ ] Arka plan silmede `Transformers.js` (tarayıcı) ile `Microsoft.ML.OnnxRuntime` (backend) arasında birini seç
+- [ ] PDF okuma için `QuestPDF` yerine `PdfPig` kullan (QuestPDF yalnızca üretir)
+- [ ] SVG ve HEIC/AVIF'i MVP'den çıkar, sonra `Magick.NET` ile ekle
+- [ ] Raster→SVG için "dönüştürme" yerine "vektörleştirme (trace)" ifadesini kullan
+- [ ] Docker'ı Faz 0'a al, Vercel/Netlify + ayrı backend için CORS ve ortam değişkenlerini erken test et
+- [ ] GitHub Actions CI'ı (build + test) ilk günden kur
+- [ ] Testleri sona bırakma, kritik servislerle birlikte yaz
 
 ---
 
-## 🧠 Faz 3: Yapay Zeka Entegrasyonları (AI Hub)
+## Faz 0: Temel (1 hafta)
 
-### 3.1. Akıllı Asistan & Yönlendirme
-- [ ] `Semantic Kernel` veya `Microsoft.Extensions.AI` paketlerini backend'e ekle
-- [ ] Doğal dilde verilen komutları doğru API endpoint'ine yönlendiren asistan mantığını yaz
+- [ ] Repo, MIT lisansı, solution yapısı
+- [ ] Vite + Tailwind + Shadcn kurulumu
+- [ ] Dockerfile ve docker-compose
+- [ ] GitHub Actions workflow
+- [ ] Dashboard iskeleti
+- [ ] Dark mode
 
-### 3.2. PDF ve Sunum AI Düzeltme
-- [ ] PDF içeriğini analiz edip eksik metin, kaynakça ve sayfa sırasını tahmin eden LLM prompt'larını hazırla
-- [ ] PDF metinlerini slayt düzenine dönüştüren PPTX yapısını kurgula (`DocumentFormat.OpenXml`)
+## Faz 1: Widget MVP (2-3 hafta)
 
-### 3.3. AI Haber Özetleyici
-- [ ] Güncel haberleri çekip LLM ile özet çıkaran arka plan görevini (`IHostedService`) yaz
+- [ ] Hava durumu widget'ı (Open-Meteo, anahtar gerektirmez)
+- [ ] Dünya saatleri (backend'siz, `Intl` ile)
+- [ ] Döviz paneli (Frankfurter API)
+- [ ] `IMemoryCache` ile önbellekleme
+- [ ] `react-grid-layout` ile sürükle-bırak yerleşim
+
+## Faz 2: Resim Dönüştürücü (2 hafta)
+
+- [ ] PNG / JPG / WebP / GIF / BMP / TIFF dönüşümü
+- [ ] Drag-and-drop yükleme alanı
+- [ ] Progress bar ve hata yönetimi
+- [ ] Dosya boyutu ve tür sınırı
+- [ ] İşlem sonrası dosya silme
+- [ ] Birim testleri (xUnit)
+
+## Faz 3: Açık Kaynak Yayını (birkaç gün)
+
+- [ ] `README.md`
+- [ ] `CONTRIBUTING.md`
+- [ ] Issue ve PR şablonları
+- [ ] "good first issue" etiketleri
+- [ ] v0.1 yayını ve geri bildirim toplama
+
+## Faz 4: Gelişmiş Araçlar
+
+- [ ] Arka plan silme (ONNX Runtime + RMBG / U²-Net)
+- [ ] HEIC / AVIF desteği (Magick.NET)
+- [ ] AI haber özetleri (kullanıcı kendi API anahtarını girer)
+
+## Faz 5: PDF Araçları
+
+- [ ] PDF birleştir
+- [ ] PDF böl
+- [ ] PDF'ten metin çıkar (PdfPig)
+- [ ] PDF→PPTX (OpenXML SDK), "deneysel" etiketiyle
+- [ ] Kaynakça eşleştirme: çıkar veya "beta" olarak işaretle
+
+## Faz 6: AI Hub
+
+- [ ] Function calling ile mevcut araçları asistana bağla
 
 ---
 
-## 🎨 Faz 4: React Frontend & Dashboard Geliştirme
+## Son Tavsiye
 
-### 4.1. Layout ve Tema
-- [ ] Tailwind `dark` sınıfı ve LocalStorage kontrolü ile Gece Modu (Dark Mode) geçişini yap
-- [ ] `react-grid-layout` ile kullanıcının widget yerlerini özelleştirebileceği yapıyı kur
-
-### 4.2. Ana Sayfa Widget Bileşenleri
-- [ ] Tarayıcı konum izni (`navigator.geolocation`) ile anlık hava durumu gösteren widget'ı yaz
-- [ ] Kullanıcının dinamik saat dilimi ve döviz kartı ekleyebileceği panelleri geliştir
-- [ ] Seçilen kategoriye göre AI haber özetlerini listeleyen kartı oluştur
-
-### 4.3. Dönüştürücü Arayüzleri
-- [ ] Sürükle-bırak (Drag-and-Drop) dosya yükleme alanlarını tasarla
-- [ ] Format seçimi ve AI düzeltme seçenekleri için arayüz elemanlarını ekle
-- [ ] İlerleme çubuğu (Progress Bar) ve bildirim panelini tamamla
-
----
-
-## 🧪 Faz 5: Test, Optimizasyon ve Yayınlama
-
-### 5.1. Test & Performans
-- [ ] Backend için `xUnit` ile Unit Test'ler yaz
-- [ ] Büyük dosya dönüştürmelerinde bellek kullanımını (Memory Leak) kontrol et
-- [ ] Mobil uyumluluk (Responsive Design) testlerini tamamla
-
-### 5.2. Yayınlama (Deployment)
-- [ ] Backend'i Dockerize edip sunucuya (VPS, Railway, Render vb.) canlıya al
-- [ ] Frontend'i Vercel veya Netlify üzerinde yayınla
-
----
-
-## 🤝 Faz 6: Açık Kaynak Topluluk Hazırlıkları
-
-- [ ] Kurulum adımlarını ve mimariyi anlatan detaylı bir `README.md` hazırla
-- [ ] Katkıda bulunmak isteyenler için `CONTRIBUTING.md` dosyası oluştur
-- [ ] GitHub üzerinde Issue ve Pull Request şablonlarını ekle
+İlk sürümde sözü az, işi çok tut. Küçük ama sağlam çalışan bir v0.1, her şeyi vaat eden ama yarım kalan bir projeden çok daha fazla katkıcı çeker. Kaynakça ve sayfa sırası tahmini gibi AI için gerçekçi olmayan vaatlerden kaçın.
